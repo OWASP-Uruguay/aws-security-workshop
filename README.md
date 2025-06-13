@@ -51,6 +51,37 @@ El código fue diseñado con malas prácticas comunes. Tu tarea es **identificar
 
 ---
 
+### 🔍 Lista de vulnerabilidades intencionales
+
+| Componente    | Vulnerabilidad                                                     |
+|---------------|--------------------------------------------------------------------|
+| S3            | ❌ Acceso público habilitado                                       |
+| S3            | ❌ Permisos excesivos para la función Lambda (`grantReadWrite`)   |
+| API Gateway   | ❌ Endpoint abierto al mundo, sin autenticación ni límites         |
+| Lambda        | ❌ IAM role con más permisos de los necesarios                     |
+| Lambda        | ❌ No hay validación de tamaño ni tipo del contenido recibido      |
+| General       | ❌ No se genera ningún log o auditoría del acceso/uso              |
+<!-- | API Gateway   | ❌ CORS completamente abierto (`*`)                                | -->
+
+---
+
+## 🧰 Ideas para hardening (mejoras)
+
+- Agregar autenticación (API Key o IAM)
+- Limitar el tamaño máximo del archivo
+- Bloquear acceso público al bucket
+- Usar políticas de IAM con permisos mínimos necesarios
+- Restringir control de acceso al bucket para la función Lambda 
+- Registrar eventos con CloudWatch Logs
+
+---
+
+## ✅ Soluciones
+
+Soluciones propuestas están implementadas en los archivos `lib\solutions-sec-lab-cdk-stack.ts` y `lambda\solutions-index.js`. Estos pueden sobreescribir los archivos `lib\sec-lab-cdk-stack.ts` y `lambda\index.js` respectivamente para verificar arreglos. Requiere re-desplegar con `cdk deploy`.
+
+---
+
 ## 🧼 Limpieza
 
 Una vez finalizado el laboratorio, podés eliminar los recursos ejecutando:
